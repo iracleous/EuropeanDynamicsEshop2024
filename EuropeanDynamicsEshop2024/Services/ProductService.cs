@@ -59,7 +59,7 @@ public class ProductService
 
     public ImmutableProduct GetProduct()
     {
-        return new ImmutableProduct(_product.Name, _product.Price);
+        return new ImmutableProduct(_product.Name, _product.Price, _product.Quantity);
     }
 
 

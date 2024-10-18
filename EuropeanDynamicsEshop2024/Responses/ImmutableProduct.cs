@@ -6,4 +6,4 @@ using System.Threading.Tasks;
 
 namespace EuropeanDynamicsEshop2024.Responses;
 
-public record ImmutableProduct(string Name, decimal Price);
+public record ImmutableProduct(string Name, decimal Price, int Quantity);
