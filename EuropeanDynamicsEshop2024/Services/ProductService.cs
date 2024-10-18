@@ -1,5 +1,6 @@
 ﻿using EuropeanDynamicsEshop2024.BusinessExceptions;
 using EuropeanDynamicsEshop2024.Models;
+using EuropeanDynamicsEshop2024.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,9 @@ public class ProductService
     {
         _product = product;
     }
-
+    /// <summary>
+    /// saves the product to a file
+    /// </summary>
     public void Save()
     {
         try
@@ -28,28 +31,59 @@ public class ProductService
         catch (Exception e)
         {
             //Console.WriteLine(e.ToString());
-            Console.WriteLine("An error occured");
+            Console.WriteLine("An error occured. The data has not been saved");
         }
     }
 
-    public void Create(string productName, decimal price)
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="productName"></param>
+    /// <param name="price"></param>
+    /// <exception cref="ProductException"></exception>
+    public void CreateProducingException(string productName, decimal price)
     {
-        if(price > 100)
+        if (price > 100 || price < 0)
         {
-            //Console.WriteLine($"cannot create create above 100");
+            //Console.WriteLine($"cannot create product with price above 100");
             //  return;
-            throw new ProductException();
+            throw new ProductException("cannot create product with price above 100");
         }
-      _product = new Product()
+        _product = new Product()
         {
             Name = productName,
             Price = price
         };
     }
 
-    public Product GetProduct()
+    public ImmutableProduct GetProduct()
     {
-        return _product;
+        return new ImmutableProduct(_product.Name, _product.Price);
     }
 
+
+
+
+    public ProductResponse Create(string productName, decimal price)
+    {
+        if (price > 100 || price < 0)
+        {
+            return new ProductResponse
+            {
+                Message = "cannot create product with price above 100",
+                Status = 2
+            };
+        }
+        _product = new Product()
+        {
+            Name = productName,
+            Price = price
+        };
+        return new ProductResponse
+        {
+            Message = "Success",
+            Status = 0
+        };
+    }
 }

@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using EuropeanDynamicsEshop2024.BusinessExceptions;
 using EuropeanDynamicsEshop2024.Models;
+using EuropeanDynamicsEshop2024.Responses;
 using EuropeanDynamicsEshop2024.Services;
 using System.Security.Authentication;
 
@@ -36,7 +38,7 @@ var productChips = new Product()
     },
     Id = 102,
     Price = 1.20m,
-    Quantity = 4, 
+    Quantity = 4,
     DiscountPerCentPetItem = 0.2m,
 };
 
@@ -54,6 +56,18 @@ var productService = new ProductService(productChips);
 
 productService.Save();
 
-productService.Create("fakes", 12.30m);
-Console.WriteLine(productService.GetProduct().Name);
 
+
+ProductResponse response = productService.Create("fakes", 12.30m);
+if (response.Status != 0)
+{
+    Console.WriteLine(response.Message);
+}
+
+Console.WriteLine($"product name {productService.GetProduct().Name} product quantity {productService.GetProduct().Quantity}");
+
+
+//productService.GetProduct().Price = 50;
+
+
+Console.WriteLine($"product name {productService.GetProduct().Name} product quantity {productService.GetProduct().Quantity}");

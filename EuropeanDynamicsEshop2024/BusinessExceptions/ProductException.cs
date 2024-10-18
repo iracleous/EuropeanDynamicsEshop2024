@@ -8,4 +8,7 @@ namespace EuropeanDynamicsEshop2024.BusinessExceptions;
 
 public class ProductException : Exception
 {
+    public ProductException(string? message) : base(message)
+    {
+    }
 }
