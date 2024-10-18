@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EuropeanDynamicsEshop2024.Models;
 using EuropeanDynamicsEshop2024.Services;
+using System.Security.Authentication;
 
 Console.WriteLine("Hello, World!");
 
@@ -39,15 +40,20 @@ var productChips = new Product()
     DiscountPerCentPetItem = 0.2m,
 };
 
-Console.Write("give the chips price: ");
-string? price = Console.ReadLine();
+//Console.Write("give the chips price: ");
+//string? price = Console.ReadLine();
 
-productChips.Price = decimal.Parse(price);
+//productChips.Price = decimal.Parse(price);
 
 Console.WriteLine($"Total price for chips = {ProductHandler.ProductTotalCost(productChips)}");
 Console.WriteLine($"Total price for patates = {ProductHandler.ProductTotalCost(productPatates)}");
 
-string filename = "c:/data/dimitrisfile.txt";
-using StreamWriter outputFile = new StreamWriter(filename, true);
-outputFile.WriteLine($"{productChips.Name},{productChips.Price},{productChips.Category}");
- 
+
+
+var productService = new ProductService(productChips);
+
+productService.Save();
+
+productService.Create("fakes", 12.30m);
+Console.WriteLine(productService.GetProduct().Name);
+
