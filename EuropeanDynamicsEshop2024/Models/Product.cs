@@ -44,6 +44,7 @@ public class Product
     public decimal Weight { get; set; }
     public int Stock {  get; set; }
     public List<Order> Orders { get; set; } = [];
+    public Supplier? Supplier { get; set; }
 }
 
 public class Customer
@@ -63,5 +64,16 @@ public class Order
     public int Id { get; set; }
     public DateTime OrderDate { get; set; }
     public Customer? Customer { get; set; }
+    public List<Product> Products { get; set; } = [];
+}
+
+public class Supplier
+{
+    public int Id { get; set; }
+    public string FistName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public DateTime RegistrationDate { get; set; }
+    public bool Active { get; set; }
     public List<Product> Products { get; set; } = [];
 }
