@@ -43,7 +43,7 @@ public class Product
     [Precision(8, 2)]
     public decimal Weight { get; set; }
     public int Stock {  get; set; }
-    public List<Order> Orders { get; set; } = [];
+    public List<OrderProduct> OrderProducts { get; set; } = [];
     public Supplier? Supplier { get; set; }
 }
 
@@ -64,7 +64,7 @@ public class Order
     public int Id { get; set; }
     public DateTime OrderDate { get; set; }
     public Customer? Customer { get; set; }
-    public List<Product> Products { get; set; } = [];
+    public List<OrderProduct> OrderProducts { get; set; } = [];
 }
 
 public class Supplier
@@ -76,4 +76,15 @@ public class Supplier
     public DateTime RegistrationDate { get; set; }
     public bool Active { get; set; }
     public List<Product> Products { get; set; } = [];
+}
+
+public class OrderProduct
+{
+
+    public int Id { get; set; }
+    public Product? Product { get; set; }
+    public Order? Order { get; set; }
+    public int Quantity { get; set; }
+    [Precision(8,2)]
+    public decimal Discount { get; set; }
 }
