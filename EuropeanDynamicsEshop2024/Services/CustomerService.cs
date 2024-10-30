@@ -1,8 +1,11 @@
 ﻿using EuropeanDynamicsEshop2024.Models;
 using EuropeanDynamicsEshop2024.Repositories;
+using EuropeanDynamicsEshop2024.Responses;
+using EuropeanDynamicsEshop2024.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,32 +13,60 @@ namespace EuropeanDynamicsEshop2024.Services;
 
 public class CustomerService : ICustomerService
 {
-    private EshopDbContext db;
+    private readonly EshopDbContext db;
+    private readonly ICustomerValidation validation;
 
-    public CustomerService(EshopDbContext db)
+    public CustomerService(EshopDbContext db, ICustomerValidation validation)
     {
         this.db = db;
+        this.validation = validation;
     }
 
     //CRUD
-    public Customer CreateCustomer(Customer customer)
+    public ResponseApi<Customer> CreateCustomer(Customer customer)
     {
+        if (!validation.CustomerValidator(customer))
+            return new ResponseApi<Customer>
+            {
+                   Status = -4,
+                   Description  = "invalid customer data"
+            };
+
         db.Customers.Add(customer);
         db.SaveChanges();
-        return customer;
+        return new ResponseApi<Customer>
+        {
+            Status = 0,
+            Description = "success",
+            Value = customer
+        };
     }
     public List<Customer> ReadCustomers()
     {
         return db.Customers.ToList();
     }
 
-    public Customer? ReadCustomer(int id)
+    public ResponseApi<Customer> ReadCustomer(int id)
     {
-        return db.Customers.Where(c => c.Id == id).FirstOrDefault();
+        Customer? customer = db.Customers.Where(c => c.Id == id).FirstOrDefault();
+        if (customer == null)
+        {
+            return new ResponseApi<Customer>
+            {
+                Status = -3,
+                Description = "cusromer not found",
+            };
+        }
+        return new ResponseApi<Customer>
+            {
+                Status = 0,
+                Description = "success",
+                Value = customer
+            };
     }
 
 
-    public Customer? UpdateCustomer(Customer customer)
+    public ResponseApi<Customer> UpdateCustomer(Customer customer)
     {
 
         Customer? customerdb = db.Customers.FirstOrDefault(c => c.Id == customer.Id);
@@ -44,7 +75,12 @@ public class CustomerService : ICustomerService
             customerdb.Email = customer.Email;
             db.SaveChanges();
         }
-        return customerdb;
+        return new ResponseApi<Customer>
+        {
+            Status = 0,
+            Description = "success",
+            Value = customerdb
+        };
     }
 
     public bool DeleteCustomer(int id)

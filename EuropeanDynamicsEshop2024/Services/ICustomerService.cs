@@ -1,12 +1,13 @@
 ﻿using EuropeanDynamicsEshop2024.Models;
+using EuropeanDynamicsEshop2024.Responses;
 
 namespace EuropeanDynamicsEshop2024.Services;
 
 public interface ICustomerService
 {
-    Customer CreateCustomer(Customer customer);
+    ResponseApi<Customer> CreateCustomer(Customer customer);
     bool DeleteCustomer(int id);
-    Customer? ReadCustomer(int id);
+    ResponseApi<Customer> ReadCustomer(int id);
     List<Customer> ReadCustomers();
-    Customer? UpdateCustomer(Customer customer);
+    ResponseApi<Customer> UpdateCustomer(Customer customer);
 }

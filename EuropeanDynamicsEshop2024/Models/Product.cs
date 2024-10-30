@@ -53,6 +53,7 @@ public class Customer
     public string FistName { get; set; }= string.Empty;
     public string  LastName { get; set; }= string.Empty;
     public string Email { get; set; }= string.Empty; 
+    public string? Country { get; set; }
     public DateTime RegistrationDate { get; set; }
     public bool    Active { get; set; }
     public List<Order> Orders { get; set; } = [];

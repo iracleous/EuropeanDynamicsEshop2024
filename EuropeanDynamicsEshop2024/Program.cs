@@ -1,6 +1,8 @@
 ﻿using EuropeanDynamicsEshop2024.Models;
 using EuropeanDynamicsEshop2024.Repositories;
+using EuropeanDynamicsEshop2024.Responses;
 using EuropeanDynamicsEshop2024.Services;
+using EuropeanDynamicsEshop2024.Validations;
 using System.Net.Http.Headers;
 
 Console.WriteLine("hello");
@@ -12,7 +14,8 @@ var customer = new Customer
     Email = "geo@gmail.com"
 };
 EshopDbContext db = new EshopDbContext();
-CustomerService customerService = new CustomerService(db);
+CustomerValidation validation = new CustomerValidation();
+CustomerService customerService = new CustomerService(db, validation);
 
 
 Console.WriteLine($"customer name = {customer.FistName} id = {customer.Id}");
@@ -21,9 +24,9 @@ customerService.CreateCustomer(customer);
 
 Console.WriteLine($"customer name = {customer.FistName} id = {customer.Id}");
 
-Customer? customerDim = customerService.ReadCustomer(1);
+ResponseApi<Customer> customerResponse = customerService.ReadCustomer(1);
 
-Console.WriteLine($"customer name = {customerDim?.FistName} id = {customerDim?.Id}");
+Console.WriteLine($"customer name = {customerResponse.Value?.FistName} id = {customerResponse.Value?.Id}");
 
 Console.WriteLine("------Customers-----------");
 customerService.ReadCustomers().ForEach(customer => Console.WriteLine(customer.Email));
