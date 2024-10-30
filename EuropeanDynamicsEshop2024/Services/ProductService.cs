@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EuropeanDynamicsEshop2024.Services;
 
-public class ProductService
+public class ProductService : IProductService
 {
     private Product _product;
 
