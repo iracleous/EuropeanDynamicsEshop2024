@@ -1,4 +1,5 @@
-﻿using EuropeanDynamicsEshop2024.Models;
+﻿using EuropeanDynamicsEshop2024.Dtos;
+using EuropeanDynamicsEshop2024.Models;
 using EuropeanDynamicsEshop2024.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ public class OrderService : IOrderService
         _context = context;
     }
 
-    public Order CreateOrder(int customerId)
+    public OrderDto CreateOrder(int customerId)
     {
         var customer = _context.Customers.Where(customer => customer.Id == customerId).FirstOrDefault();
         if (customer == null)
@@ -31,7 +32,13 @@ public class OrderService : IOrderService
         };
         _context.Orders.Add(order);
         _context.SaveChanges();
-        return order;
+        return new OrderDto
+        {
+             CustomerId = order.Customer.Id,
+             OrderDate = order.OrderDate,
+             CustomerName = order.Customer.FistName + " " + order.Customer.LastName,
+             Id = order.Id
+        };
     }
 
 }

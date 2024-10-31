@@ -1,4 +1,5 @@
-﻿using EuropeanDynamicsEshop2024.Models;
+﻿using EuropeanDynamicsEshop2024.Dtos;
+using EuropeanDynamicsEshop2024.Models;
 using EuropeanDynamicsEshop2024.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost("{id}")]
-    public Order CreateOrder(int id)
+    public OrderDto CreateOrder(int id)
     {
         return _orderService.CreateOrder(id);
     }
