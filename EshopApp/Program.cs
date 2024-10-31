@@ -1,6 +1,8 @@
 using EuropeanDynamicsEshop2024.Repositories;
 using EuropeanDynamicsEshop2024.Services;
 using EuropeanDynamicsEshop2024.Validations;
+using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<EshopDbContext>();
 builder.Services.AddScoped<ICustomerValidation, CustomerValidation>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+
+ 
+
 
 
 var app = builder.Build();

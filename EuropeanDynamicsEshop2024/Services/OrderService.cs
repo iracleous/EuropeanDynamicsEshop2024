@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EuropeanDynamicsEshop2024.Services;
 
-public class OrderService
+public class OrderService : IOrderService
 {
     private readonly EshopDbContext _context;
 
@@ -24,9 +24,10 @@ public class OrderService
         {
             return null;
         }
-        var order = new Order() {
-             OrderDate = DateTime.Now,
-             Customer = customer,
+        var order = new Order()
+        {
+            OrderDate = DateTime.Now,
+            Customer = customer,
         };
         _context.Orders.Add(order);
         _context.SaveChanges();
